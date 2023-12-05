@@ -1,0 +1,22 @@
+.affirmationtitle {
+    text-align: center;
+    color: palevioletred;
+    font-size: 50px;
+}
+
+.addnotetitle {
+    text-align: center;
+    color: palevioletred;
+    font-size: 50px;
+}
+
+.storybox{
+    margin-top: 50px;
+    width: 100%;
+    
+}
+
+.note {
+    color: palevioletred;
+    font-size: 20px;
+}

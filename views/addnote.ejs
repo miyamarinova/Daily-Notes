@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+<%- include('partials/usernavbar') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Note</title>
+</head>
+<body>
+    <div class="container">
+        <h3 class="note"> Tell me about your day... </h3>
+        <h3 class="note">Tell me about your feelings... </h3>
+        <h3 class="note">What are you grateful for...? </h3>
+        <h3 class="note">What do you want to let go...?</h3>
+        <div class="card">
+            <div class="card-header"><h1 class="addnotetitle"> <%= today %></h1></div>    
+            <div class="card-body">
+        <textarea class="storybox" id="story" name="story" rows="20" cols="30">
+        </textarea></div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    
+    </div></div>
+</body>
+</html>
