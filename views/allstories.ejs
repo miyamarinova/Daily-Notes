@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+<%- include("partials/usernavbar.ejs") %>
+
+<% usersWithStories.forEach(function(user) { %>
+    <div class="card">
+        <div class="card-title">
+            <div class="card-body">
+                <p class="note">
+                    <%= user.date %>
+                    <%= user.story %>
+                </p>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+
+
+<a class="btn btn-primary" href="/addstory">Add Story</a>

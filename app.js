@@ -62,15 +62,9 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  note: {
+  story: {
     type: String
-  },
-  goal: {
-    note: {
-      type: String
-    }
   }
-
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -278,9 +272,12 @@ app.post("/login", (req, res, next) => {
 });
 
 app.post("/logout", function(req, res, next){
-  req.logout(function(err) {
-    if (err) { return next(err); }
-    res.redirect('/');
+  req.logOut(function(err) {
+    if (err) { return next(err);
+     } else {
+      res.redirect('/');
+     }
+    
   });
 });
 
@@ -297,17 +294,61 @@ app.get("/userhome",async(req, res) => {
 
 });
 
-app.get("/addnote", (req,res)=> {
+app.get("/addstory", (req,res)=> {
   if (req.isAuthenticated) {
     const value = date.format(now,'YYYY/MM/DD'); 
     console.log(value)
-    res.render("addnote",{ today: value});
+    res.render("addstory",{ today: value});
   } else {
 
     res.redirect("/login");
   }
 })
 
-app.listen(port, function () {
+// ALl notes route display all the stories to the app users
+app.get("/allstories", function(req, res){
+  if (req.isAuthenticated()) {
+    User.find({ "story": { $ne: null } })
+    .then((foundUsers) => {
+      res.render("allstories", { usersWithStories: foundUsers});
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/addstory", function(req, res){
+  if (req.isAuthenticated()){
+    res.render("addstory");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.post("/addstory", function(req, res){
+  const submittedStory = req.body.story;
+  
+  // Once the user is authenticated and their session gets saved, their user details are saved to req.user.
+  User.findById(req.user.id)
+  .then((foundUser) => {
+    if (foundUser) {
+      foundUser.story = submittedStory;
+      return foundUser.save();
+    } else {
+      throw new Error("user not found");
+    }
+  })
+  .then(() => {
+    res.redirect("/allstories");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+});
+
+  app.listen(port, function () {
     console.log("server started on port ${port}.")
 });
